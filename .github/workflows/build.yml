@@ -1,3 +1,4 @@
+name: Node Continuous Integration
 # on: push es un evento que desencadena el flujo de trabajo cuando se realiza push
 # a la rama del repositorio (master o main) en la que se encuentra el archivo YML 
 on: push
@@ -5,13 +6,24 @@ on: push
 # en este caso hay un solo trabajo llamado first-job
 jobs:
     # es el nombre del trabajo que se ejecutará, nota se pueden tener multiples flujos de trabajo
-    first-job: 
+    build-node:
+        name: Build and run Node Project
         # especifica el entorno en el que se ejecutará el trabajo
         # en este caso el trabajo se ejecutará en la última versión de Windows.
         runs-on: ubuntu-latest
-        container: node:14.6.0
+        container: node:16
         # steps: aquí se definen las tareas que se ejecutarán como parte del trabajo.
         # cada paso representa una tarea específica que se realizará en el entorno especificado.
         steps:
             - run: node --version 
+              name: Check Node Version
             - run: npm --version 
+              name: Check NPM Verion
+# Esta acción se utiliza para que el flujo de trabajo pueda acceder al repositorio y verificar
+# su contenido en el entorno de ejecución.
+            - uses: actions/checkout@v3
+              name: actions/checkout@v3
+            - run: npm install 
+              name: Install NPM packages
+            - run: node app.js
+              name: Run Node Application

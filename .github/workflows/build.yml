@@ -8,7 +8,8 @@ jobs:
     first-job: 
         # especifica el entorno en el que se ejecutará el trabajo
         # en este caso el trabajo se ejecutará en la última versión de Windows.
-        runs-on: windows-latest
+        runs-on: ubuntu-latest
+        container: node:17.6.0
         # steps: aquí se definen las tareas que se ejecutarán como parte del trabajo.
         # cada paso representa una tarea específica que se realizará en el entorno especificado.
         steps:
